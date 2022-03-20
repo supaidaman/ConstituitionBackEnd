@@ -12,10 +12,10 @@ export class ConstitutionController {
 
   @Get()
   async getFullConstitution(): Promise<string> {
-    const axiosRequest = this.httpService.get(
+    const axiosRequest = await this.httpService.get(
       'https://normas.leg.br/api/normas?urn=urn:lex:br:federal:constituicao:1988-10-05;1988&&tipo_documento=maior-detalhe',
-    )
-    this.constitutionService.processDataFromNormasAPI(axiosRequest)
-    return this.constitutionService.getFullConstitution()
+    );
+    await this.constitutionService.processDataFromNormasAPI(axiosRequest);
+    return this.constitutionService.getFullConstitution();
   }
 }
