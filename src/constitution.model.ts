@@ -1,5 +1,9 @@
-export interface ConstitutionModel {
-  legislationDate: Date;
-  id: string;
-  //titles: string[];
+import { TitleModel } from './title/title.model';
+
+export class ConstitutionModel {
+  constructor(
+    private legislationDate: Date,
+    private id: string,
+    private titles: TitleModel[],
+  ) {}
 }

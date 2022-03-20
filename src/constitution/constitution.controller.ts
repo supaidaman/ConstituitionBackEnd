@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Controller, Get } from '@nestjs/common';
 import { lastValueFrom, map } from 'rxjs';
+import { ConstitutionModel } from 'src/constitution.model';
 import { ConstitutionService } from './constitution.service';
 
 @Controller('constitution')
@@ -11,11 +12,13 @@ export class ConstitutionController {
   ) {}
 
   @Get()
-  async getFullConstitution(): Promise<string> {
+  async getFullConstitution(): Promise<ConstitutionModel> {
     const axiosRequest = await this.httpService.get(
       'https://normas.leg.br/api/normas?urn=urn:lex:br:federal:constituicao:1988-10-05;1988&&tipo_documento=maior-detalhe',
     );
-    await this.constitutionService.processDataFromNormasAPI(axiosRequest);
-    return this.constitutionService.getFullConstitution();
+    const constitution =
+      await this.constitutionService.processDataFromNormasAPI(axiosRequest);
+    return constitution;
+    //return this.constitutionService.getFullConstitution();
   }
 }
