@@ -30,16 +30,14 @@ export class ConstitutionService {
     return new ConstitutionModel(legislationDate, id, processedTitles);
   }
   //TODO processamento aqui
-  async processDataFromNormasAPI(normasJson: Observable<any>) {
-    return await lastValueFrom(
-      normasJson.pipe(
-        map((response) => {
-          //console.log(response.data);
-          const constModel: ConstitutionModel =
-            this.buildConstituitionModel(response);
-          return constModel;
-        }),
-      ),
+  processDataFromNormasAPI(normasJson: Observable<any>) {
+    return normasJson.pipe(
+      map((response) => {
+        //console.log(response.data);
+        const constModel: ConstitutionModel =
+          this.buildConstituitionModel(response);
+        return constModel;
+      }),
     );
   }
 }
