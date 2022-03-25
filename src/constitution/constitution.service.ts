@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { lastValueFrom, map, Observable } from 'rxjs';
-import { ConstitutionModel } from 'src/constitution.model';
+import { ChapterModel } from 'src/article/chapter.model';
+import { ConstitutionModel } from 'src/constitution/constitution.model';
+import { TitleService } from 'src/title/title.service';
 import { TitleModel } from '../title/title.model';
 @Injectable()
 export class ConstitutionService {
@@ -19,11 +21,18 @@ export class ConstitutionService {
     console.log(titlesArray.length);
 
     for (let i = 0; i < titlesArray.length; i++) {
+      let currentTitleArticles: ChapterModel[] = [];
+      if (i > 0) {
+        currentTitleArticles = TitleService.getChaptersFromTitleJson(
+          titlesArray[i],
+        );
+      }
       const newTitle: TitleModel = {
         name: titlesArray[i].name,
         id: titlesArray[i]['@id'],
         text: titlesArray[i].text,
         legislationIdentifier: titlesArray[0].legislationIdentifier,
+        chapters: currentTitleArticles,
       };
       processedTitles.push(newTitle);
     }

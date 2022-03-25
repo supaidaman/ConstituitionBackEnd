@@ -1,4 +1,4 @@
-import { TitleModel } from './title/title.model';
+import { TitleModel } from '../title/title.model';
 
 export class ConstitutionModel {
   constructor(

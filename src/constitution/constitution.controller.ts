@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Controller, Get } from '@nestjs/common';
 import { lastValueFrom, map, Observable } from 'rxjs';
-import { ConstitutionModel } from 'src/constitution.model';
+import { ConstitutionModel } from 'src/constitution/constitution.model';
 import { ConstitutionService } from './constitution.service';
 
 @Controller('constitution')
