@@ -1,4 +1,4 @@
-import { ChapterModel } from 'src/article/chapter.model';
+import { ChapterModel } from 'src/chapter/chapter.model';
 import { DocumentModel } from 'src/document/document.model';
 
 export interface TitleModel extends DocumentModel {

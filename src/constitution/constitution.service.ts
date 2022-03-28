@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { lastValueFrom, map, Observable } from 'rxjs';
-import { ChapterModel } from 'src/article/chapter.model';
+import { ChapterModel } from 'src/chapter/chapter.model';
 import { ConstitutionModel } from 'src/constitution/constitution.model';
 import { TitleService } from 'src/title/title.service';
 import { TitleModel } from '../title/title.model';
@@ -18,15 +18,15 @@ export class ConstitutionService {
     const titlesArray = response.data['hasPart']; //.filter(function (el) {
     //   return el['legislationType'] === 'Título';
     // });
-    console.log(titlesArray.length);
+    //console.log(titlesArray.length);
 
     for (let i = 0; i < titlesArray.length; i++) {
       let currentTitleArticles: ChapterModel[] = [];
-      if (i > 0) {
-        currentTitleArticles = TitleService.getChaptersFromTitleJson(
-          titlesArray[i],
-        );
-      }
+
+      currentTitleArticles = TitleService.getChaptersFromTitleJson(
+        titlesArray[i],
+      );
+
       const newTitle: TitleModel = {
         name: titlesArray[i].name,
         id: titlesArray[i]['@id'],

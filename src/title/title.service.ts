@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ChapterModel } from 'src/article/chapter.model';
+
+import { ChapterModel } from 'src/chapter/chapter.model';
+import { ChapterService } from 'src/chapter/chapter.service';
 
 @Injectable()
 export class TitleService {
@@ -12,14 +14,20 @@ export class TitleService {
     const chapterArray = title.hasPart;
 
     for (let i = 0; i < chapterArray.length; i++) {
-      const newArticle: ChapterModel = {
-        name: chapterArray[i].name,
-        id: chapterArray[i]['@id'],
-        text: chapterArray[i].text,
-        legislationIdentifier: chapterArray[i].legislationIdentifier,
-      };
+      if (chapterArray[i].legislationType !== 'Artigo') {
+        const currentChapterArticles = ChapterService.getArticlesFromChapter(
+          chapterArray[i],
+        );
 
-      transformedChapterArray.push(newArticle);
+        const newChapter: ChapterModel = {
+          name: chapterArray[i].name,
+          id: chapterArray[i]['@id'],
+          text: chapterArray[i].text,
+          legislationIdentifier: chapterArray[i].legislationIdentifier,
+          articles: currentChapterArticles,
+        };
+        transformedChapterArray.push(newChapter);
+      }
     }
     return transformedChapterArray;
   }
