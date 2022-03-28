@@ -23,7 +23,7 @@ export class ConstitutionService {
     for (let i = 0; i < titlesArray.length; i++) {
       let currentTitleArticles: ChapterModel[] = [];
 
-      currentTitleArticles = TitleService.getChaptersFromTitleJson(
+      currentTitleArticles = TitleService.getChaptersFromTitleJSON(
         titlesArray[i],
       );
 

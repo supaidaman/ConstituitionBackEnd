@@ -9,15 +9,14 @@ export class TitleService {
    * @param  {any} title
    * @returns ChapterModel
    */
-  static getChaptersFromTitleJson(title: any): ChapterModel[] {
+  static getChaptersFromTitleJSON(title: any): ChapterModel[] {
     const transformedChapterArray: ChapterModel[] = [];
     const chapterArray = title.hasPart;
 
     for (let i = 0; i < chapterArray.length; i++) {
       if (chapterArray[i].legislationType !== 'Artigo') {
-        const currentChapterArticles = ChapterService.getArticlesFromChapter(
-          chapterArray[i],
-        );
+        const currentChapterArticles =
+          ChapterService.getArticlesFromChapterJSON(chapterArray[i]);
 
         const newChapter: ChapterModel = {
           name: chapterArray[i].name,
