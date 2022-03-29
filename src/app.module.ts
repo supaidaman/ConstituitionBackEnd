@@ -8,10 +8,17 @@ import { TitleService } from './title/title.service';
 import { ArticleService } from './article/article.service';
 import { ChapterService } from './chapter/chapter.service';
 import { ParagraphService } from './paragraph/paragraph.service';
+import { ClauseService } from './clause/clause.service';
 
 @Module({
   imports: [ConstitutionModule],
-  providers: [TitleService, ArticleService, ChapterService, ParagraphService],
+  providers: [
+    TitleService,
+    ArticleService,
+    ChapterService,
+    ParagraphService,
+    ClauseService,
+  ],
   // controllers: [AppController, ConstitutionController],
   // providers: [AppService, ConstitutionService],
 })

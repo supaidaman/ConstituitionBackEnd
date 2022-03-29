@@ -26,6 +26,17 @@ export class TitleService {
           articles: currentChapterArticles,
         };
         transformedChapterArray.push(newChapter);
+      } else {
+        const currentChapterArticles =
+          ChapterService.getArticlesFromFirstChapterJSON(title);
+        const newChapter: ChapterModel = {
+          name: '',
+          id: '',
+          text: 'CAPÍTULO ÚNICO',
+          legislationIdentifier: '',
+          articles: currentChapterArticles,
+        };
+        transformedChapterArray.push(newChapter);
       }
     }
     return transformedChapterArray;
