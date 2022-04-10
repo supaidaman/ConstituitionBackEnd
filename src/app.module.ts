@@ -9,6 +9,7 @@ import { ArticleService } from './article/article.service';
 import { ChapterService } from './chapter/chapter.service';
 import { ParagraphService } from './paragraph/paragraph.service';
 import { ClauseService } from './clause/clause.service';
+import { MendService } from './mend/mend.service';
 
 @Module({
   imports: [ConstitutionModule],
@@ -18,6 +19,7 @@ import { ClauseService } from './clause/clause.service';
     ChapterService,
     ParagraphService,
     ClauseService,
+    MendService,
   ],
   // controllers: [AppController, ConstitutionController],
   // providers: [AppService, ConstitutionService],
