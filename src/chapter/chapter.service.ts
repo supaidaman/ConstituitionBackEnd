@@ -26,15 +26,18 @@ export class ChapterService {
     const transformedArticleArray: ArticleModel[] = [];
     const articleArray = chapter.hasPart;
 
+    if (chapter.text === 'Dos Direitos e Deveres Individuais e Coletivos') {
+      console.log(chapter.hasPart);
+    }
     //todo change where the static methods are
     for (let i = 0; i < articleArray.length; i++) {
-      // const currentArticleParagraphs =
-      //   ParagraphService.getParagraphsFromArticleJSON(articleArray[i]);
+      const currentArticleParagraphs =
+        ParagraphService.getParagraphsFromArticleJSON(articleArray[i]);
       const newArticle: ArticleModel = {
         name: articleArray[i].name,
         legislationIdentifier: articleArray[i].legislationIdentifier,
         id: '',
-        paragraphs: [],
+        paragraphs: currentArticleParagraphs,
       };
       transformedArticleArray.push(newArticle);
     }

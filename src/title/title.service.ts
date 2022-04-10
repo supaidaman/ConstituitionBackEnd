@@ -14,6 +14,11 @@ export class TitleService {
     const chapterArray = title.hasPart;
 
     for (let i = 0; i < chapterArray.length; i++) {
+      // if (title.name == 'TÍTULO II') {
+      //   console.log('--------------');
+      //   console.log(chapterArray[i]);
+      //   console.log('--------------');
+      // }
       if (chapterArray[i].legislationType !== 'Artigo') {
         const currentChapterArticles =
           ChapterService.getArticlesFromChapterJSON(chapterArray[i]);
