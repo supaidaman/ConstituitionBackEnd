@@ -13,36 +13,38 @@ export class TitleService {
     const transformedChapterArray: ChapterModel[] = [];
     const chapterArray = title.hasPart;
 
-    for (let i = 0; i < chapterArray.length; i++) {
-      // if (title.name == 'TÍTULO II') {
-      //   console.log('--------------');
-      //   console.log(chapterArray[i]);
-      //   console.log('--------------');
-      // }
-      if (chapterArray[i].legislationType !== 'Artigo') {
-        const currentChapterArticles =
-          ChapterService.getArticlesFromChapterJSON(chapterArray[i]);
+    if (title.name !== 'TÍTULO I' && title.name !== 'TÍTULO IX') {
+      for (let i = 0; i < chapterArray.length; i++) {
+        // if (title.name == 'TÍTULO II') {
+        //   console.log('--------------');
+        //   console.log(chapterArray[i]);
+        //   console.log('--------------');
+        // }
+        if (chapterArray[i].legislationType !== 'Artigo') {
+          const currentChapterArticles =
+            ChapterService.getArticlesFromChapterJSON(chapterArray[i]);
 
-        const newChapter: ChapterModel = {
-          name: chapterArray[i].name,
-          id: chapterArray[i]['@id'],
-          text: chapterArray[i].text,
-          legislationIdentifier: chapterArray[i].legislationIdentifier,
-          articles: currentChapterArticles,
-        };
-        transformedChapterArray.push(newChapter);
-      } else {
-        const currentChapterArticles =
-          ChapterService.getArticlesFromFirstChapterJSON(title);
-        const newChapter: ChapterModel = {
-          name: '',
-          id: '',
-          text: 'CAPÍTULO ÚNICO',
-          legislationIdentifier: '',
-          articles: currentChapterArticles,
-        };
-        transformedChapterArray.push(newChapter);
+          const newChapter: ChapterModel = {
+            name: chapterArray[i].name,
+            id: chapterArray[i]['@id'],
+            text: chapterArray[i].text,
+            legislationIdentifier: chapterArray[i].legislationIdentifier,
+            articles: currentChapterArticles,
+          };
+          transformedChapterArray.push(newChapter);
+        }
       }
+    } else {
+      const currentChapterArticles =
+        ChapterService.getArticlesFromNoTitleChapterJSON(title);
+      const newChapter: ChapterModel = {
+        name: '',
+        id: '',
+        text: 'CAPÍTULO ÚNICO',
+        legislationIdentifier: '',
+        articles: currentChapterArticles,
+      };
+      transformedChapterArray.push(newChapter);
     }
     return transformedChapterArray;
   }

@@ -5,7 +5,7 @@ import { ParagraphService } from 'src/paragraph/paragraph.service';
 
 @Injectable()
 export class ChapterService {
-  static getArticlesFromFirstChapterJSON(title: any) {
+  static getArticlesFromNoTitleChapterJSON(title: any) {
     const transformedArticleArray: ArticleModel[] = [];
     const articleArray = title.hasPart;
     //todo change where the static methods are
