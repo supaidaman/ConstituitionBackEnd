@@ -13,13 +13,14 @@ export class TitleService {
     const transformedChapterArray: ChapterModel[] = [];
     const chapterArray = title.hasPart;
 
+    if (title.name == 'TÍTULO II') {
+      console.log('--------------');
+      console.log(chapterArray[0].hasPart[0].hasPart[0].workExample[0].text);
+      console.log('--------------');
+    }
+
     if (title.name !== 'TÍTULO I' && title.name !== 'TÍTULO IX') {
       for (let i = 0; i < chapterArray.length; i++) {
-        // if (title.name == 'TÍTULO II') {
-        //   console.log('--------------');
-        //   console.log(chapterArray[i]);
-        //   console.log('--------------');
-        // }
         if (chapterArray[i].legislationType !== 'Artigo') {
           const currentChapterArticles =
             ChapterService.getArticlesFromChapterJSON(chapterArray[i]);
@@ -27,7 +28,7 @@ export class TitleService {
           const newChapter: ChapterModel = {
             name: chapterArray[i].name,
             id: chapterArray[i]['@id'],
-            text: chapterArray[i].text,
+            text: chapterArray[i].hasPart[0].hasPart[0].workExample[0].text,
             legislationIdentifier: chapterArray[i].legislationIdentifier,
             articles: currentChapterArticles,
           };

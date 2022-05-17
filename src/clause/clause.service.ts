@@ -14,7 +14,7 @@ export class ClauseService {
         name: clauseArray[i].name,
         legislationIdentifier: clauseArray[i].legislationIdentifier,
         id: '',
-        text: clauseArray[i].text,
+        text: clauseArray[i].workExample[0].text,
       };
       transformedClauseArray.push(newClause);
     }

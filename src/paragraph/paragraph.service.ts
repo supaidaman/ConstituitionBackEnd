@@ -17,7 +17,7 @@ export class ParagraphService {
         name: paragraphArray[i].name,
         legislationIdentifier: paragraphArray[i].legislationIdentifier,
         id: '',
-        text: paragraphArray[i].text,
+        text: paragraphArray[i].workExample[0].text,
         clauses: currentParagraphClauses,
       };
       transformedParagraphArray.push(newParagraph);

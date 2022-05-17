@@ -11,14 +11,20 @@ export class ConstitutionService {
   }
 
   buildConstituitionModel(response): ConstitutionModel {
-    //console.log(response.data);
+    // const titlesArray = response.data.hasPart;
+    // console.log(titlesArray[0].hasPart[2]);
+    // return response.data;
     const legislationDate = response.data['legislationDate'];
     const id = response.data['@id'];
     const processedTitles: TitleModel[] = [];
-    const titlesArray = response.data['hasPart']; //.filter(function (el) {
+    //----------------------------------------
+    let titlesArray = response.data.hasPart;
+    titlesArray = titlesArray[0].hasPart[2];
+    titlesArray = titlesArray.hasPart;
+    //----------------------------------------
+    //.filter(function (el) {
     //   return el['legislationType'] === 'Título';
     // });
-    //console.log(titlesArray.length);
 
     for (let i = 0; i < titlesArray.length; i++) {
       let currentTitleArticles: ChapterModel[] = [];
@@ -30,7 +36,7 @@ export class ConstitutionService {
       const newTitle: TitleModel = {
         name: titlesArray[i].name,
         id: titlesArray[i]['@id'],
-        text: titlesArray[i].text,
+        text: titlesArray[i].workExample[0].text,
         legislationIdentifier: titlesArray[0].legislationIdentifier,
         chapters: currentTitleArticles,
       };
