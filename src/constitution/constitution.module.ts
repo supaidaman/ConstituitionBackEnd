@@ -6,6 +6,6 @@ import { ConstitutionService } from './constitution.service';
 @Module({
   imports: [HttpModule],
   providers: [ConstitutionService],
-  controllers: [ConstitutionController]
+  controllers: [ConstitutionController],
 })
 export class ConstitutionModule {}

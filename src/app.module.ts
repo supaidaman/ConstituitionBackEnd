@@ -10,6 +10,7 @@ import { ChapterService } from './chapter/chapter.service';
 import { ParagraphService } from './paragraph/paragraph.service';
 import { ClauseService } from './clause/clause.service';
 import { MendService } from './mend/mend.service';
+import { SubParagraphService } from './sub-paragraph/sub-paragraph.service';
 
 @Module({
   imports: [ConstitutionModule],
@@ -20,6 +21,7 @@ import { MendService } from './mend/mend.service';
     ParagraphService,
     ClauseService,
     MendService,
+    SubParagraphService,
   ],
   // controllers: [AppController, ConstitutionController],
   // providers: [AppService, ConstitutionService],
