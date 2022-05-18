@@ -20,4 +20,14 @@ export class ConstitutionController {
       this.constitutionService.processDataFromNormasAPI(axiosRequest);
     return constitution;
   }
+
+  @Get('/d3-file')
+  getConstitutionConvertedToD3File() {
+    const axiosRequest = this.httpService.get(
+      'https://normas.leg.br/api/normas?urn=urn:lex:br:federal:constituicao:1988-10-05;1988&&tipo_documento=maior-detalhe',
+    );
+    const constitution =
+      this.constitutionService.processDataFromNormasAPI(axiosRequest);
+    return "{ 'name': 'Constituição'',' 'children': '[' ']'}";
+  }
 }
