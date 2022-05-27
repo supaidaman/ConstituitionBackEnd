@@ -4,6 +4,7 @@ import { ParagraphModel } from 'src/paragraph/paragraph.model';
 
 export interface ArticleModel extends DocumentModel {
   name: string;
-  paragraphs: ParagraphModel[];
+  children: ParagraphModel[];
+  value: number;
   foreseenChanges: MendModel[];
 }

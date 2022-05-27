@@ -13,12 +13,15 @@ export class ParagraphService {
         paragraphArray[i],
       );
 
+      let sum = 1;
+      currentParagraphClauses.forEach((a) => (sum += a.value));
       const newParagraph: ParagraphModel = {
         name: paragraphArray[i].name,
         legislationIdentifier: paragraphArray[i].legislationIdentifier,
         id: '',
         text: paragraphArray[i].workExample[0].text,
-        clauses: currentParagraphClauses,
+        children: currentParagraphClauses,
+        value: sum,
       };
       transformedParagraphArray.push(newParagraph);
     }

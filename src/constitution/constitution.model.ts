@@ -4,6 +4,6 @@ export class ConstitutionModel {
   constructor(
     private legislationDate: Date,
     private id: string,
-    private titles: TitleModel[],
+    private children: TitleModel[],
   ) {}
 }

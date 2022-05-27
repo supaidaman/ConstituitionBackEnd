@@ -15,6 +15,7 @@ export class SubParagraphService {
         legislationIdentifier: subParagraphArray[i].legislationIdentifier,
         id: '',
         text: subParagraphArray[i].workExample[0].text,
+        value: 1,
       };
       transformedSubParagraphArray.push(newClause);
     }

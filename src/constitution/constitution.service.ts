@@ -33,12 +33,16 @@ export class ConstitutionService {
         titlesArray[i],
       );
 
+      let sum = 1;
+      currentTitleArticles.forEach((a) => (sum += a.value));
+
       const newTitle: TitleModel = {
         name: titlesArray[i].name,
         id: titlesArray[i]['@id'],
         text: titlesArray[i].workExample[0].text,
         legislationIdentifier: titlesArray[0].legislationIdentifier,
-        chapters: currentTitleArticles,
+        value: sum,
+        children: currentTitleArticles,
       };
       processedTitles.push(newTitle);
     }

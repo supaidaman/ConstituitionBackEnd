@@ -16,11 +16,14 @@ export class ChapterService {
       const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
         articleArray[i],
       );
+      let sum = 1;
+      currentArticleParagraphs.forEach((a) => (sum += a.value));
       const newArticle: ArticleModel = {
         name: articleArray[i].name,
         legislationIdentifier: articleArray[i].legislationIdentifier,
         id: '',
-        paragraphs: currentArticleParagraphs,
+        value: sum,
+        children: currentArticleParagraphs,
         foreseenChanges: foreseenChanges,
       };
       transformedArticleArray.push(newArticle);
@@ -39,11 +42,15 @@ export class ChapterService {
     for (let i = 0; i < articleArray.length; i++) {
       const currentArticleParagraphs =
         ParagraphService.getParagraphsFromArticleJSON(articleArray[i]);
+
+      let sum = 1;
+      currentArticleParagraphs.forEach((a) => (sum += a.value));
       const newArticle: ArticleModel = {
         name: articleArray[i].name,
         legislationIdentifier: articleArray[i].legislationIdentifier,
         id: '',
-        paragraphs: currentArticleParagraphs,
+        value: sum,
+        children: currentArticleParagraphs,
         foreseenChanges: [],
       };
       transformedArticleArray.push(newArticle);

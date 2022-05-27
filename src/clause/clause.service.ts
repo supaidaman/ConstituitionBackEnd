@@ -25,7 +25,8 @@ export class ClauseService {
         legislationIdentifier: clauseArray[i].legislationIdentifier,
         id: '',
         text: clauseArray[i].workExample[0].text,
-        subparagraphs: currentSubParagraphs,
+        value: currentSubParagraphs.length + 1,
+        children: currentSubParagraphs,
       };
       transformedClauseArray.push(newClause);
     }

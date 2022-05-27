@@ -25,12 +25,15 @@ export class TitleService {
           const currentChapterArticles =
             ChapterService.getArticlesFromChapterJSON(chapterArray[i]);
 
+          let sum = 1;
+          currentChapterArticles.forEach((a) => (sum += a.value));
           const newChapter: ChapterModel = {
             name: chapterArray[i].name,
             id: chapterArray[i]['@id'],
             text: chapterArray[i].hasPart[0].hasPart[0].workExample[0].text,
+            value: sum,
             legislationIdentifier: chapterArray[i].legislationIdentifier,
-            articles: currentChapterArticles,
+            children: currentChapterArticles,
           };
           transformedChapterArray.push(newChapter);
         }
@@ -38,12 +41,15 @@ export class TitleService {
     } else {
       const currentChapterArticles =
         ChapterService.getArticlesFromNoTitleChapterJSON(title);
+      let sum = 1;
+      currentChapterArticles.forEach((a) => (sum += a.value));
       const newChapter: ChapterModel = {
         name: '',
         id: '',
         text: 'CAPÍTULO ÚNICO',
         legislationIdentifier: '',
-        articles: currentChapterArticles,
+        value: sum,
+        children: currentChapterArticles,
       };
       transformedChapterArray.push(newChapter);
     }

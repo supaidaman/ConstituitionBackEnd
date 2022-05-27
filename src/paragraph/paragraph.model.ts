@@ -4,5 +4,6 @@ import { DocumentModel } from 'src/document/document.model';
 export interface ParagraphModel extends DocumentModel {
   name: string;
   text: string;
-  clauses: ClauseModel[];
+  value: number;
+  children: ClauseModel[];
 }
