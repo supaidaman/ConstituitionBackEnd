@@ -1,60 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { ArticleModel } from 'src/article/article.model';
+import { ArticleService } from 'src/article/article.service';
 import { MendService } from 'src/mend/mend.service';
 import { ParagraphService } from 'src/paragraph/paragraph.service';
+import { ChapterModel } from './chapter.model';
 
 @Injectable()
 export class ChapterService {
-  static getArticlesFromNoTitleChapterJSON(title: any) {
-    const transformedArticleArray: ArticleModel[] = [];
-    const articleArray = title.hasPart;
-    //todo change where the static methods are
-    for (let i = 0; i < articleArray.length; i++) {
-      const currentArticleParagraphs =
-        ParagraphService.getParagraphsFromArticleJSON(articleArray[i]);
+  static getChaptersFromTitleJSON(title: any): ChapterModel[] {
+    const transformedChapterArray: ChapterModel[] = [];
+    const chapterArray = title.hasPart;
 
-      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
-        articleArray[i],
-      );
+    if (title.name !== 'TÍTULO I' && title.name !== 'TÍTULO IX') {
+      for (let i = 0; i < chapterArray.length; i++) {
+        if (chapterArray[i].legislationType !== 'Artigo') {
+          const currentChapterArticles =
+            ArticleService.getArticlesFromChapterJSON(chapterArray[i]);
+
+          let sum = 1;
+          currentChapterArticles.forEach((a) => (sum += a.value));
+          const newChapter: ChapterModel = {
+            name: chapterArray[i].name,
+            id: chapterArray[i]['@id'],
+            text: chapterArray[i].hasPart[0].hasPart[0].workExample[0].text,
+            value: sum,
+            legislationIdentifier: chapterArray[i].legislationIdentifier,
+            children: currentChapterArticles,
+          };
+          transformedChapterArray.push(newChapter);
+        }
+      }
+    } else {
+      const currentChapterArticles =
+        ArticleService.getArticlesFromNoTitleChapterJSON(title);
       let sum = 1;
-      currentArticleParagraphs.forEach((a) => (sum += a.value));
-      const newArticle: ArticleModel = {
-        name: articleArray[i].name,
-        legislationIdentifier: articleArray[i].legislationIdentifier,
+      currentChapterArticles.forEach((a) => (sum += a.value));
+      const newChapter: ChapterModel = {
+        name: '',
         id: '',
+        text: 'CAPÍTULO ÚNICO',
+        legislationIdentifier: '',
         value: sum,
-        children: currentArticleParagraphs,
-        foreseenChanges: foreseenChanges,
+        children: currentChapterArticles,
       };
-      transformedArticleArray.push(newArticle);
+      transformedChapterArray.push(newChapter);
     }
-    return transformedArticleArray;
-  }
-
-  static getArticlesFromChapterJSON(chapter: any) {
-    const transformedArticleArray: ArticleModel[] = [];
-    const articleArray = chapter.hasPart;
-
-    if (chapter.text === 'Dos Direitos e Deveres Individuais e Coletivos') {
-      console.log(chapter.hasPart);
-    }
-    //todo change where the static methods are
-    for (let i = 0; i < articleArray.length; i++) {
-      const currentArticleParagraphs =
-        ParagraphService.getParagraphsFromArticleJSON(articleArray[i]);
-
-      let sum = 1;
-      currentArticleParagraphs.forEach((a) => (sum += a.value));
-      const newArticle: ArticleModel = {
-        name: articleArray[i].name,
-        legislationIdentifier: articleArray[i].legislationIdentifier,
-        id: '',
-        value: sum,
-        children: currentArticleParagraphs,
-        foreseenChanges: [],
-      };
-      transformedArticleArray.push(newArticle);
-    }
-    return transformedArticleArray;
+    return transformedChapterArray;
   }
 }

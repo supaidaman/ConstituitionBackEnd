@@ -9,17 +9,16 @@ export class ClauseService {
     const clauseArray = paragraph.hasPart;
     if (clauseArray == null) return transformedClauseArray;
 
-    //todo change where the static methods are
     for (let i = 0; i < clauseArray.length; i++) {
       const currentSubParagraphs =
         SubParagraphService.getSubParagraphsFromClauseJSON(clauseArray[i]);
-      if (
-        clauseArray[i].workExample[0].text ===
-        'são assegurados, nos termos da lei:'
-      ) {
-        console.log('achou');
-        console.log(currentSubParagraphs);
-      }
+      // if (
+      //   clauseArray[i].workExample[0].text ===
+      //   'são assegurados, nos termos da lei:'
+      // ) {
+      //   console.log('achou');
+      //   console.log(currentSubParagraphs);
+      // }
       const newClause: ClauseModel = {
         name: clauseArray[i].name,
         legislationIdentifier: clauseArray[i].legislationIdentifier,
