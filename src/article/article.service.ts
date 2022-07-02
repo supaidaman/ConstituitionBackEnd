@@ -23,7 +23,7 @@ export class ArticleService {
         legislationIdentifier: articleArray[i].legislationIdentifier,
         id: '',
         value: sum,
-        children: currentArticleParagraphs,
+        paragraphs: currentArticleParagraphs,
         foreseenChanges: foreseenChanges,
       };
       transformedArticleArray.push(newArticle);
@@ -50,7 +50,7 @@ export class ArticleService {
         legislationIdentifier: articleArray[i].legislationIdentifier,
         id: '',
         value: sum,
-        children: currentArticleParagraphs,
+        paragraphs: currentArticleParagraphs,
         foreseenChanges: [],
       };
       transformedArticleArray.push(newArticle);

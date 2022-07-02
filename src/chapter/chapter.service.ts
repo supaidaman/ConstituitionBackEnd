@@ -4,6 +4,7 @@ import { ArticleService } from 'src/article/article.service';
 import { MendService } from 'src/mend/mend.service';
 import { ParagraphService } from 'src/paragraph/paragraph.service';
 import { ChapterModel } from './chapter.model';
+import { titleCase } from '../utils/utils';
 
 @Injectable()
 export class ChapterService {
@@ -20,12 +21,16 @@ export class ChapterService {
           let sum = 1;
           currentChapterArticles.forEach((a) => (sum += a.value));
           const newChapter: ChapterModel = {
-            name: chapterArray[i].name,
+            name: titleCase(
+              chapterArray[i].name === ''
+                ? chapterArray[i].text
+                : chapterArray[i].name,
+            ),
             id: chapterArray[i]['@id'],
             text: chapterArray[i].hasPart[0].hasPart[0].workExample[0].text,
             value: sum,
             legislationIdentifier: chapterArray[i].legislationIdentifier,
-            children: currentChapterArticles,
+            articles: currentChapterArticles,
           };
           transformedChapterArray.push(newChapter);
         }
@@ -36,12 +41,12 @@ export class ChapterService {
       let sum = 1;
       currentChapterArticles.forEach((a) => (sum += a.value));
       const newChapter: ChapterModel = {
-        name: '',
+        name: titleCase('CAPÍTULO ÚNICO - ' + title.name),
         id: '',
         text: 'CAPÍTULO ÚNICO',
         legislationIdentifier: '',
         value: sum,
-        children: currentChapterArticles,
+        articles: currentChapterArticles,
       };
       transformedChapterArray.push(newChapter);
     }

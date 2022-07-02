@@ -11,7 +11,10 @@ export class SubParagraphService {
     //todo change where the static methods are
     for (let i = 0; i < subParagraphArray.length; i++) {
       const newClause: SubParagraphModel = {
-        name: subParagraphArray[i].name,
+        name:
+          subParagraphArray[i].name === ''
+            ? subParagraphArray[i].text
+            : subParagraphArray[i].name,
         legislationIdentifier: subParagraphArray[i].legislationIdentifier,
         id: '',
         text: subParagraphArray[i].workExample[0].text,

@@ -4,6 +4,6 @@ import { SubParagraphModel } from 'src/sub-paragraph/sub-paragraph.model';
 export interface ClauseModel extends DocumentModel {
   name: string;
   text: string;
-  children: SubParagraphModel[];
+  subparagraphs: SubParagraphModel[];
   value: number;
 }

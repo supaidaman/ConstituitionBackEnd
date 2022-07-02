@@ -5,6 +5,7 @@ import { ChapterService } from 'src/chapter/chapter.service';
 import { ConstitutionModel } from 'src/constitution/constitution.model';
 import { TitleService } from 'src/title/title.service';
 import { TitleModel } from '../title/title.model';
+import { titleCase } from '../utils/utils';
 @Injectable()
 export class ConstitutionService {
   async getFullConstitution(): Promise<string> {
@@ -31,12 +32,16 @@ export class ConstitutionService {
       currentTitleArticles.forEach((a) => (sum += a.value));
 
       const newTitle: TitleModel = {
-        name: titlesArray[i].name,
+        name: titleCase(
+          titlesArray[i].name === '' || titlesArray[i].name === undefined
+            ? titlesArray[i].text
+            : titlesArray[i].name,
+        ),
         id: titlesArray[i]['@id'],
         text: titlesArray[i].workExample[0].text,
         legislationIdentifier: titlesArray[0].legislationIdentifier,
         value: sum,
-        children: currentTitleArticles,
+        chapters: currentTitleArticles,
       };
       processedTitles.push(newTitle);
     }

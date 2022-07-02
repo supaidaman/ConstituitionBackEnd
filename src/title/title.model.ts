@@ -4,6 +4,6 @@ import { DocumentModel } from 'src/document/document.model';
 export interface TitleModel extends DocumentModel {
   name: string;
   text: string;
-  children: ChapterModel[];
+  chapters: ChapterModel[];
   value: number;
 }

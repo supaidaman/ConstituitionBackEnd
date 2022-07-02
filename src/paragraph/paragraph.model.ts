@@ -5,5 +5,5 @@ export interface ParagraphModel extends DocumentModel {
   name: string;
   text: string;
   value: number;
-  children: ClauseModel[];
+  clauses: ClauseModel[];
 }

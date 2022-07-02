@@ -11,9 +11,13 @@ import { ParagraphService } from './paragraph/paragraph.service';
 import { ClauseService } from './clause/clause.service';
 import { MendService } from './mend/mend.service';
 import { SubParagraphService } from './sub-paragraph/sub-paragraph.service';
+//import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [ConstitutionModule],
+  imports: [
+    ConstitutionModule,
+    //MongooseModule.forRoot('mongodb://localhost/nest'),
+  ],
   providers: [
     TitleService,
     ArticleService,
