@@ -3,6 +3,7 @@ import { lastValueFrom, map, Observable } from 'rxjs';
 import { ChapterModel } from 'src/chapter/chapter.model';
 import { ChapterService } from 'src/chapter/chapter.service';
 import { ConstitutionModel } from 'src/constitution/constitution.model';
+import { MendService } from 'src/mend/mend.service';
 import { TitleService } from 'src/title/title.service';
 import { TitleModel } from '../title/title.model';
 import { titleCase } from '../utils/utils';
@@ -31,6 +32,10 @@ export class ConstitutionService {
       let sum = 1;
       currentTitleArticles.forEach((a) => (sum += a.value));
 
+      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+        titlesArray[i],
+      );
+
       const newTitle: TitleModel = {
         name: titleCase(
           titlesArray[i].name === '' || titlesArray[i].name === undefined
@@ -39,9 +44,11 @@ export class ConstitutionService {
         ),
         id: titlesArray[i]['@id'],
         text: titlesArray[i].workExample[0].text,
-        legislationIdentifier: titlesArray[0].legislationIdentifier,
+        legislationIdentifier: titlesArray[i].legislationIdentifier,
+        legislationType: titlesArray[i].legislationType,
         value: sum,
         chapters: currentTitleArticles,
+        foreseenChanges,
       };
       processedTitles.push(newTitle);
     }

@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { MendService } from 'src/mend/mend.service';
+import { v4 as uuidv4 } from 'uuid';
 import { SubParagraphModel } from './sub-paragraph.model';
 
 @Injectable()
@@ -10,15 +12,20 @@ export class SubParagraphService {
     //console.log(clause.hasPart);
     //todo change where the static methods are
     for (let i = 0; i < subParagraphArray.length; i++) {
+      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+        subParagraphArray[i],
+      );
       const newClause: SubParagraphModel = {
         name:
           subParagraphArray[i].name === ''
             ? subParagraphArray[i].text
             : subParagraphArray[i].name,
         legislationIdentifier: subParagraphArray[i].legislationIdentifier,
-        id: '',
+        id: uuidv4(),
         text: subParagraphArray[i].workExample[0].text,
+        legislationType: subParagraphArray[i].legislationType,
         value: 1,
+        foreseenChanges: foreseenChanges,
       };
       transformedSubParagraphArray.push(newClause);
     }

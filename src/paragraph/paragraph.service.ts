@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ClauseService } from 'src/clause/clause.service';
 import { ParagraphModel } from './paragraph.model';
 import { titleCase } from '../utils/utils';
+import { v4 as uuidv4 } from 'uuid';
+import { MendService } from 'src/mend/mend.service';
+
 @Injectable()
 export class ParagraphService {
   static getParagraphsFromArticleJSON(article: any) {
@@ -22,6 +25,7 @@ export class ParagraphService {
       if (paragraphArray[i].name === undefined) {
         if (paragraphArray[i].workExample[0].text === undefined) {
           paragraphName = 'PARAGRAFO';
+          console.log(paragraphArray[i]);
         } else {
           paragraphName = paragraphArray[i].workExample[0].text;
         }
@@ -29,13 +33,19 @@ export class ParagraphService {
         paragraphName = paragraphArray[i].name;
       }
       currentParagraphClauses.forEach((a) => (sum += a.value));
+
+      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+        paragraphArray[i],
+      );
       const newParagraph: ParagraphModel = {
         name: titleCase(paragraphName),
         legislationIdentifier: paragraphArray[i].legislationIdentifier,
-        id: '',
+        id: uuidv4(),
         text: paragraphArray[i].workExample[0].text,
-        clauses: currentParagraphClauses,
+        legislationType: paragraphArray[i].legislationType,
         value: sum,
+        clauses: currentParagraphClauses,
+        foreseenChanges: foreseenChanges,
       };
       transformedParagraphArray.push(newParagraph);
     }

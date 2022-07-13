@@ -5,6 +5,7 @@ import { MendService } from 'src/mend/mend.service';
 import { ParagraphService } from 'src/paragraph/paragraph.service';
 import { ChapterModel } from './chapter.model';
 import { titleCase } from '../utils/utils';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ChapterService {
@@ -20,6 +21,9 @@ export class ChapterService {
 
           let sum = 1;
           currentChapterArticles.forEach((a) => (sum += a.value));
+          const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+            chapterArray[i],
+          );
           const newChapter: ChapterModel = {
             name: titleCase(
               chapterArray[i].name === ''
@@ -28,9 +32,11 @@ export class ChapterService {
             ),
             id: chapterArray[i]['@id'],
             text: chapterArray[i].hasPart[0].hasPart[0].workExample[0].text,
-            value: sum,
             legislationIdentifier: chapterArray[i].legislationIdentifier,
+            legislationType: chapterArray[i].legislationType,
+            value: sum,
             articles: currentChapterArticles,
+            foreseenChanges: foreseenChanges,
           };
           transformedChapterArray.push(newChapter);
         }
@@ -40,13 +46,16 @@ export class ChapterService {
         ArticleService.getArticlesFromNoTitleChapterJSON(title);
       let sum = 1;
       currentChapterArticles.forEach((a) => (sum += a.value));
+
       const newChapter: ChapterModel = {
         name: titleCase('CAPÍTULO ÚNICO - ' + title.name),
-        id: '',
+        id: uuidv4(),
         text: 'CAPÍTULO ÚNICO',
         legislationIdentifier: '',
         value: sum,
         articles: currentChapterArticles,
+        legislationType: 'Original_Version',
+        foreseenChanges: null,
       };
       transformedChapterArray.push(newChapter);
     }

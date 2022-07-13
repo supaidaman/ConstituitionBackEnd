@@ -6,4 +6,7 @@ export class ConstitutionModel {
     private id: string,
     private titles: TitleModel[],
   ) {}
+  getTitles() {
+    return this.titles;
+  }
 }

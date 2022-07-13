@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MendService } from 'src/mend/mend.service';
 import { ParagraphService } from 'src/paragraph/paragraph.service';
+import { v4 as uuidv4 } from 'uuid';
 import { ArticleModel } from './article.model';
 
 @Injectable()
@@ -21,7 +22,8 @@ export class ArticleService {
       const newArticle: ArticleModel = {
         name: articleArray[i].name,
         legislationIdentifier: articleArray[i].legislationIdentifier,
-        id: '',
+        id: uuidv4(),
+        legislationType: articleArray[i].legislationType,
         value: sum,
         paragraphs: currentArticleParagraphs,
         foreseenChanges: foreseenChanges,
@@ -48,9 +50,10 @@ export class ArticleService {
       const newArticle: ArticleModel = {
         name: articleArray[i].name,
         legislationIdentifier: articleArray[i].legislationIdentifier,
-        id: '',
+        id: uuidv4(),
         value: sum,
         paragraphs: currentArticleParagraphs,
+        legislationType: articleArray[i].legislationType,
         foreseenChanges: [],
       };
       transformedArticleArray.push(newArticle);

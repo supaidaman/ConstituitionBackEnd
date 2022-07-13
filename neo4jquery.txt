@@ -1,0 +1,51 @@
+call apoc.load.json($url) yield value
+unwind value.titles as q 
+unwind q.chapters as c
+unwind c.articles as a
+unwind a.paragraphs as p
+unwind p.clauses as cl
+unwind cl.subparagraphs as s
+
+merge(titles:Titles {id:q.id}) 
+  ON MATCH SET titles.text = q.text,
+  titles.value = q.value 
+  ON CREATE SET titles.text = q.text,
+  titles.value = q.value 
+
+merge(chapters:Chapter{id: c.id}) 
+  ON CREATE SET chapters.text = c.text,
+    chapters.name = c.name
+    MERGE (titles)-[:HAS_INFO]->(chapters)
+    
+  ON MATCH SET chapters.text = c.text,
+   chapters.name = c.name
+   MERGE (titles)-[:HAS_INFO]->(chapters)
+
+merge(articles:Article{id: a.id})
+  ON CREATE SET articles.name = c.name
+    MERGE (chapters)-[:HAS_INFO]->(articles)
+  ON MATCH SET articles.name = c.name
+    MERGE (chapters)-[:HAS_INFO]->(articles)
+
+merge(paragraphs:Paragraph{id: p.id})
+  ON CREATE SET paragraphs.name = p.name
+     MERGE (articles)-[:HAS_INFO]->(paragraphs)
+  ON MATCH SET paragraphs.name = p.name
+    MERGE (articles)-[:HAS_INFO]->(paragraphs)
+
+merge(clauses:Clause{id: cl.id})
+  ON CREATE SET clauses.text = cl.text,
+    clauses.name = cl.name
+    MERGE (paragraphs)-[:HAS_INFO]->(clauses)
+  ON MATCH SET clauses.natextme = cl.text,
+    clauses.name = cl.name
+    MERGE (paragraphs)-[:HAS_INFO]->(clauses)
+    
+merge(subparagraphs:Subparagraph{id: s.id})
+  ON CREATE SET subparagraphs.text = s.text,
+    subparagraphs.name = s.name
+    MERGE (clauses)-[:HAS_INFO]->(subparagraphs)
+  ON MATCH SET subparagraphs.text = s.text,
+    subparagraphs.name = s.name
+    MERGE (clauses)-[:HAS_INFO]->(subparagraphs)
+    

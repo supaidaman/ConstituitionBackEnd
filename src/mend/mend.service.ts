@@ -12,10 +12,11 @@ export class MendService {
         const newMend: MendModel = {
           id: foreseenChangesJSON[i]['@id'],
           changeType: ChangeType.FORESEEN,
-          mendType: MendType.LAW,
+          mendType: MendType.LAW, //TODO FIX BY ID - EMENDA OU LEI
         };
         mends.push(newMend);
       }
+      // NAVEGAR ATÉ LINK E PEGAR DADOS COMPLETOS
     }
     return mends;
   }
