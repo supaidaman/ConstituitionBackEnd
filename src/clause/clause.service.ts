@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ChangeType } from 'src/mend/mend.model';
 import { MendService } from 'src/mend/mend.service';
 import { SubParagraphService } from 'src/sub-paragraph/sub-paragraph.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,8 +25,9 @@ export class ClauseService {
       } else {
         clauseName = clauseArray[i].name;
       }
-      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+      const foreseenChanges = MendService.getChangesFromArticleJson(
         clauseArray[i],
+        ChangeType.FORESEEN,
       );
       const newClause: ClauseModel = {
         name: clauseName,

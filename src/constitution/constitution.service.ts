@@ -3,6 +3,7 @@ import { lastValueFrom, map, Observable } from 'rxjs';
 import { ChapterModel } from 'src/chapter/chapter.model';
 import { ChapterService } from 'src/chapter/chapter.service';
 import { ConstitutionModel } from 'src/constitution/constitution.model';
+import { ChangeType } from 'src/mend/mend.model';
 import { MendService } from 'src/mend/mend.service';
 import { TitleService } from 'src/title/title.service';
 import { TitleModel } from '../title/title.model';
@@ -32,8 +33,9 @@ export class ConstitutionService {
       let sum = 1;
       currentTitleArticles.forEach((a) => (sum += a.value));
 
-      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+      const foreseenChanges = MendService.getChangesFromArticleJson(
         titlesArray[i],
+        ChangeType.FORESEEN,
       );
 
       const newTitle: TitleModel = {

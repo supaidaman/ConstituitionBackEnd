@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ChangeType } from 'src/mend/mend.model';
 import { MendService } from 'src/mend/mend.service';
 import { v4 as uuidv4 } from 'uuid';
 import { SubParagraphModel } from './sub-paragraph.model';
@@ -12,8 +13,9 @@ export class SubParagraphService {
     //console.log(clause.hasPart);
     //todo change where the static methods are
     for (let i = 0; i < subParagraphArray.length; i++) {
-      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+      const foreseenChanges = MendService.getChangesFromArticleJson(
         subParagraphArray[i],
+        ChangeType.FORESEEN,
       );
       const newClause: SubParagraphModel = {
         name:

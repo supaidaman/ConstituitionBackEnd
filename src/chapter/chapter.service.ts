@@ -6,6 +6,7 @@ import { ParagraphService } from 'src/paragraph/paragraph.service';
 import { ChapterModel } from './chapter.model';
 import { titleCase } from '../utils/utils';
 import { v4 as uuidv4 } from 'uuid';
+import { ChangeType } from 'src/mend/mend.model';
 
 @Injectable()
 export class ChapterService {
@@ -21,8 +22,9 @@ export class ChapterService {
 
           let sum = 1;
           currentChapterArticles.forEach((a) => (sum += a.value));
-          const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+          const foreseenChanges = MendService.getChangesFromArticleJson(
             chapterArray[i],
+            ChangeType.FORESEEN,
           );
           const newChapter: ChapterModel = {
             name: titleCase(
@@ -38,7 +40,6 @@ export class ChapterService {
             articles: currentChapterArticles,
             foreseenChanges: foreseenChanges,
           };
-          transformedChapterArray.push(newChapter);
         }
       }
     } else {

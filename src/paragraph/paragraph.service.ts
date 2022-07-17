@@ -4,6 +4,7 @@ import { ParagraphModel } from './paragraph.model';
 import { titleCase } from '../utils/utils';
 import { v4 as uuidv4 } from 'uuid';
 import { MendService } from 'src/mend/mend.service';
+import { ChangeType } from 'src/mend/mend.model';
 
 @Injectable()
 export class ParagraphService {
@@ -18,14 +19,14 @@ export class ParagraphService {
 
       let sum = 1;
       let paragraphName = '';
-      if (article.name == 'Seção I') {
-        console.log(paragraphArray[i].name);
-        console.log(paragraphArray[i].workExample[0].text);
-      }
+      // if (article.name == 'Seção I') {
+      //   console.log(paragraphArray[i].name);
+      //   console.log(paragraphArray[i].workExample[0].text);
+      // }
       if (paragraphArray[i].name === undefined) {
         if (paragraphArray[i].workExample[0].text === undefined) {
           paragraphName = 'PARAGRAFO';
-          console.log(paragraphArray[i]);
+          // console.log(paragraphArray[i]);
         } else {
           paragraphName = paragraphArray[i].workExample[0].text;
         }
@@ -34,8 +35,9 @@ export class ParagraphService {
       }
       currentParagraphClauses.forEach((a) => (sum += a.value));
 
-      const foreseenChanges = MendService.getForeseenChangesFromArticleJson(
+      const foreseenChanges = MendService.getChangesFromArticleJson(
         paragraphArray[i],
+        ChangeType.FORESEEN,
       );
       const newParagraph: ParagraphModel = {
         name: titleCase(paragraphName),

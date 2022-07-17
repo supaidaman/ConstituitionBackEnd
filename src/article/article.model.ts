@@ -6,4 +6,5 @@ export interface ArticleModel extends DocumentModel {
   name: string;
   paragraphs: ParagraphModel[];
   value: number;
+  alreadyAppliedChanges: MendModel[];
 }

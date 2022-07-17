@@ -7,7 +7,7 @@ export class Neo4jUsageController {
 
   @Get()
   async getDB(): Promise<any> {
-    console.log('aaaa');
+    // console.log('aaaa');
     const res = await this.neo4jUsageService.read(
       `MATCH (n) RETURN count(n) AS count`,
     );
