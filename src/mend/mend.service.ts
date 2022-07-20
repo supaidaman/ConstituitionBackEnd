@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { NormasApiService } from 'src/normas-api/normas-api.service';
 import { MendModel, MendType, ChangeType } from './mend.model';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class MendService {
   static getChangesFromArticleJson(
     articleJson: any,
     changeType: ChangeType,
   ): MendModel[] {
-    if (articleJson.name == 'LXXVIII –') {
-      console.log(articleJson);
-      console.log('-----externo-----');
-      console.log('workArray');
-    }
     if (changeType == ChangeType.FORESEEN) {
       return MendService.foreseenChanges(articleJson);
     }
@@ -23,10 +19,15 @@ export class MendService {
     const changesFromJson = articleJson.legislationForeseesChangedBy;
     if (Array.isArray(changesFromJson)) {
       for (let i = 0; i < changesFromJson.length; i++) {
+        const textFromChange = NormasApiService.getTextFromNormasURI(
+          changesFromJson[i]['@id'],
+        );
         const newMend: MendModel = {
-          id: changesFromJson[i]['@id'],
+          id: uuidv4(),
+          urn: changesFromJson[i]['@id'],
           changeType: ChangeType.FORESEEN,
-          mendType: MendType.LAW, //TODO FIX BY ID - EMENDA OU LEI
+          mendType: MendType.LAW,
+          name: textFromChange, //TODO FIX BY ID - EMENDA OU LEI
         };
         mends.push(newMend);
       }
@@ -38,25 +39,42 @@ export class MendService {
   static alreadyAppliedChanges(articleJson: any): MendModel[] {
     const mends: MendModel[] = [];
     const workArray = articleJson.workExample; // array de workExample
-    if (articleJson.name == 'LXXVIII –') {
-      console.log(articleJson);
-      console.log('----------');
-      console.log(workArray);
-    }
 
     for (let i = 0; i < workArray.length; i++) {
-      if (workArray[i].legislationCorrectedBy !== undefined)
-        console.log(workArray[i].legislationCorrectedBy.name);
-      //console.log('--------------------------------');
-      // console.log(workArray[i].legislationCorrectedBy);
+      const legislationCorrectedBy = workArray[i].legislationCorrectedBy;
+      const legislationConsolidates = workArray[i].legislationConsolidates;
+
+      console.log(legislationCorrectedBy);
+      if (legislationConsolidates !== undefined) {
+        const newMend: MendModel = {
+          id: uuidv4(),
+          urn: legislationConsolidates['@id'],
+          changeType: ChangeType.FORESEEN,
+          mendType: MendType.LAW,
+          name: legislationConsolidates.name, //TODO FIX BY ID - EMENDA OU LEI
+          //TODO ADD TEMPORAL COVERAGE
+        };
+        mends.push(newMend);
+      }
+      if (legislationCorrectedBy !== undefined) {
+        const newMend: MendModel = {
+          id: uuidv4(),
+          urn: legislationCorrectedBy['@id'],
+          changeType: ChangeType.FORESEEN,
+          mendType: MendType.LAW,
+          name: legislationCorrectedBy.name, //TODO FIX BY ID - EMENDA OU LEI
+        };
+        mends.push(newMend);
+      }
     }
-    // const changesFromJson = articleJson.legislationForeseesChangedBy;
-    // if (Array.isArray(changesFromJson)) {
-    //   for (let i = 0; i < changesFromJson.length; i++) {
+
+    // if (Array.isArray(legislationCorrectedBy)) {
+    //   for (let i = 0; i < legislationCorrectedBy.length; i++) {
     //     const newMend: MendModel = {
-    //       id: changesFromJson[i]['@id'],
+    //       id: legislationCorrectedBy[i]['@id'],
     //       changeType: ChangeType.FORESEEN,
-    //       mendType: MendType.LAW, //TODO FIX BY ID - EMENDA OU LEI
+    //       mendType: MendType.LAW,
+    //       name: legislationCorrectedBy[i].name, //TODO FIX BY ID - EMENDA OU LEI
     //     };
     //     mends.push(newMend);
     //   }
@@ -65,6 +83,7 @@ export class MendService {
     return mends;
   }
 }
+
 //TODO GET ARTIGO QUINTO
 //VERIFICAR EMENDAS QUE PASSARAM:
 //ESTRUTURA É ESSA

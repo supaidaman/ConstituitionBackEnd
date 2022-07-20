@@ -27,11 +27,15 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^9.1.0",
     "@nestjs/platform-express": "^8.0.0",
+    "axios": "^0.27.2",
+    "axios-observable": "^1.5.0",
     "mongoose": "^6.3.4",
     "nest-neo4j": "^0.1.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.5.6",
+    "sync-request": "^6.1.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

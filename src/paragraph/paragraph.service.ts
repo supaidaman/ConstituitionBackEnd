@@ -39,6 +39,10 @@ export class ParagraphService {
         paragraphArray[i],
         ChangeType.FORESEEN,
       );
+      const alreadyAppliedChanges = MendService.getChangesFromArticleJson(
+        paragraphArray[i],
+        ChangeType.PASSED,
+      );
       const newParagraph: ParagraphModel = {
         name: titleCase(paragraphName),
         legislationIdentifier: paragraphArray[i].legislationIdentifier,
@@ -48,6 +52,7 @@ export class ParagraphService {
         value: sum,
         clauses: currentParagraphClauses,
         foreseenChanges: foreseenChanges,
+        alreadyAppliedChanges: alreadyAppliedChanges,
       };
       transformedParagraphArray.push(newParagraph);
     }

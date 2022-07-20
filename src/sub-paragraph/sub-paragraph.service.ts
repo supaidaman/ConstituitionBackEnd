@@ -17,6 +17,10 @@ export class SubParagraphService {
         subParagraphArray[i],
         ChangeType.FORESEEN,
       );
+      const alreadyAppliedChanges = MendService.getChangesFromArticleJson(
+        subParagraphArray[i],
+        ChangeType.PASSED,
+      );
       const newClause: SubParagraphModel = {
         name:
           subParagraphArray[i].name === ''
@@ -28,6 +32,7 @@ export class SubParagraphService {
         legislationType: subParagraphArray[i].legislationType,
         value: 1,
         foreseenChanges: foreseenChanges,
+        alreadyAppliedChanges: alreadyAppliedChanges,
       };
       transformedSubParagraphArray.push(newClause);
     }

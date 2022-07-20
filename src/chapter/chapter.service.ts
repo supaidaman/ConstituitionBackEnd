@@ -26,6 +26,10 @@ export class ChapterService {
             chapterArray[i],
             ChangeType.FORESEEN,
           );
+          const alreadyAppliedChanges = MendService.getChangesFromArticleJson(
+            chapterArray[i],
+            ChangeType.PASSED,
+          );
           const newChapter: ChapterModel = {
             name: titleCase(
               chapterArray[i].name === ''
@@ -39,7 +43,9 @@ export class ChapterService {
             value: sum,
             articles: currentChapterArticles,
             foreseenChanges: foreseenChanges,
+            alreadyAppliedChanges: alreadyAppliedChanges,
           };
+          transformedChapterArray.push(newChapter);
         }
       }
     } else {
@@ -57,6 +63,7 @@ export class ChapterService {
         articles: currentChapterArticles,
         legislationType: 'Original_Version',
         foreseenChanges: null,
+        alreadyAppliedChanges: null,
       };
       transformedChapterArray.push(newChapter);
     }

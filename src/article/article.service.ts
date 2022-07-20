@@ -34,7 +34,7 @@ export class ArticleService {
 
       const alreadyAppliedChanges = MendService.getChangesFromArticleJson(
         articleArray[i],
-        ChangeType.FORESEEN,
+        ChangeType.PASSED,
       );
       let sum = 1;
       currentArticleParagraphs.forEach((a) => (sum += a.value));

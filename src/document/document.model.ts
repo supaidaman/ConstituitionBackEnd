@@ -5,4 +5,5 @@ export interface DocumentModel {
   id: string;
   legislationType: string;
   foreseenChanges: MendModel[];
+  alreadyAppliedChanges: MendModel[];
 }

@@ -38,6 +38,10 @@ export class ConstitutionService {
         ChangeType.FORESEEN,
       );
 
+      const alreadyAppliedChanges = MendService.getChangesFromArticleJson(
+        titlesArray[i],
+        ChangeType.PASSED,
+      );
       const newTitle: TitleModel = {
         name: titleCase(
           titlesArray[i].name === '' || titlesArray[i].name === undefined
@@ -50,14 +54,17 @@ export class ConstitutionService {
         legislationType: titlesArray[i].legislationType,
         value: sum,
         chapters: currentTitleArticles,
-        foreseenChanges,
+        foreseenChanges: foreseenChanges,
+        alreadyAppliedChanges: alreadyAppliedChanges,
       };
       processedTitles.push(newTitle);
     }
     return new ConstitutionModel(legislationDate, id, processedTitles);
   }
   //TODO processamento aqui
-  processDataFromNormasAPI(normasJson: Observable<any>) {
+  processDataFromNormasAPI(
+    normasJson: Observable<any>,
+  ): Observable<ConstitutionModel> {
     return normasJson.pipe(
       map((response) => {
         //console.log(response.data);

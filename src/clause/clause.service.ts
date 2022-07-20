@@ -29,6 +29,10 @@ export class ClauseService {
         clauseArray[i],
         ChangeType.FORESEEN,
       );
+      const alreadyAppliedChanges = MendService.getChangesFromArticleJson(
+        clauseArray[i],
+        ChangeType.PASSED,
+      );
       const newClause: ClauseModel = {
         name: clauseName,
         legislationIdentifier: clauseArray[i].legislationIdentifier,
@@ -39,6 +43,7 @@ export class ClauseService {
         value: currentSubParagraphs.length + 1,
         subparagraphs: currentSubParagraphs,
         foreseenChanges: foreseenChanges,
+        alreadyAppliedChanges: alreadyAppliedChanges,
       };
       transformedClauseArray.push(newClause);
     }

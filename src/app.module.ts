@@ -11,6 +11,7 @@ import { SubParagraphService } from './sub-paragraph/sub-paragraph.service';
 import { Neo4jModule } from 'nest-neo4j';
 import { AppService } from './app.service';
 import { Neo4jUsageModule } from './neo4j/neo4jUsage.module';
+import { NormasApiService } from './normas-api/normas-api.service';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Neo4jUsageModule } from './neo4j/neo4jUsage.module';
     ClauseService,
     MendService,
     SubParagraphService,
+    NormasApiService,
   ],
   // controllers: [AppController, ConstitutionController],
   // providers: [AppService, ConstitutionService],
