@@ -19,16 +19,10 @@ export class MendService {
     const changesFromJson = articleJson.legislationForeseesChangedBy;
     if (Array.isArray(changesFromJson)) {
       for (let i = 0; i < changesFromJson.length; i++) {
-        const textFromChange = NormasApiService.getTextFromNormasURI(
+        const newMend = NormasApiService.getMendFromNormasURI(
           changesFromJson[i]['@id'],
         );
-        const newMend: MendModel = {
-          id: uuidv4(),
-          urn: changesFromJson[i]['@id'],
-          changeType: ChangeType.FORESEEN,
-          mendType: MendType.LAW,
-          name: textFromChange, //TODO FIX BY ID - EMENDA OU LEI
-        };
+
         mends.push(newMend);
       }
       // NAVEGAR ATÉ LINK E PEGAR DADOS COMPLETOS
@@ -44,14 +38,23 @@ export class MendService {
       const legislationCorrectedBy = workArray[i].legislationCorrectedBy;
       const legislationConsolidates = workArray[i].legislationConsolidates;
 
-      console.log(legislationCorrectedBy);
-      if (legislationConsolidates !== undefined) {
+      if (legislationCorrectedBy !== undefined) {
+        console.log(legislationCorrectedBy);
+        //normas.leg.br/api/normas?urn=urn:lex:br:federal:emenda.constitucional:2022-02-10;115&&tipo_documento=maior-detalhe
+        //FORMATO EMENDA REAL
+        //TODO PEGAR ESSAS URLS TODAS E PROCESSAR PARA PEGAR DADOS COMPLETOS
+      }
+
+      https: if (legislationConsolidates !== undefined) {
         const newMend: MendModel = {
           id: uuidv4(),
           urn: legislationConsolidates['@id'],
           changeType: ChangeType.FORESEEN,
           mendType: MendType.LAW,
-          name: legislationConsolidates.name, //TODO FIX BY ID - EMENDA OU LEI
+          name: legislationConsolidates.name,
+          alternateName: '',
+          keywords: [],
+          //TODO FIX BY ID - EMENDA OU LEI
           //TODO ADD TEMPORAL COVERAGE
         };
         mends.push(newMend);
@@ -62,7 +65,10 @@ export class MendService {
           urn: legislationCorrectedBy['@id'],
           changeType: ChangeType.FORESEEN,
           mendType: MendType.LAW,
-          name: legislationCorrectedBy.name, //TODO FIX BY ID - EMENDA OU LEI
+          name: legislationCorrectedBy.name,
+          alternateName: '',
+          keywords: [],
+          //TODO FIX BY ID - EMENDA OU LEI
         };
         mends.push(newMend);
       }

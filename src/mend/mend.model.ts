@@ -3,7 +3,9 @@ export interface MendModel {
   urn: string;
   changeType: ChangeType;
   mendType: MendType;
-  name: any;
+  name: string;
+  alternateName: string;
+  keywords: string[];
 }
 
 export enum ChangeType {
